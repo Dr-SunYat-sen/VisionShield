@@ -20,6 +20,8 @@ target/
 *.dll
 *.so
 *.dylib
+.ptl
+.pt
 
 # IDE和编辑器
 .idea/
