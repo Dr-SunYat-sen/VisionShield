@@ -17,6 +17,8 @@ const vlmStatusEl = document.getElementById('vlm-status');
 const vlmOutputEl = document.getElementById('vlm-output');
 const performanceMetricsEl = document.getElementById('performance-metrics');
 
+let lastVLMDescription = '';  // 缓存上次的描述，避免重复更新
+
 function logInfo(msg) {
     const p = document.createElement('div');
     p.innerText = `[${new Date().toLocaleTimeString()}] ${msg}`;
@@ -36,11 +38,25 @@ function updateVLMStatus(status, isReady = false) {
 
 function updateVLMOutput(analysis) {
     if (!vlmOutputEl || !analysis) return;
-    
+
     const description = analysis.vlm_description || '';
     const analysisType = analysis.analysis_type || 'unknown';
     const isAnomaly = analysis.is_anomaly || false;
     const threats = analysis.detected_threats || [];
+
+    // ✅ 优化：避免重复更新导致闪动
+    // 1. 如果是缓存结果，直接跳过（不更新UI）
+    if (analysisType === 'cached') {
+        return;
+    }
+
+    // 2. 如果描述内容没变化，也跳过更新
+    if (description === lastVLMDescription && description !== '') {
+        return;
+    }
+
+    // 3. 记录本次描述，用于下次比较
+    lastVLMDescription = description;
     
     // 根据分析类型设置样式
     let typeLabel = '';
@@ -82,6 +98,16 @@ function updateVLMOutput(analysis) {
             typeLabel = '🧠 智能分析';
             bgColor = '#1a2d2d';
             borderColor = '#00d4ff';
+            break;
+        case 'vlm_deep':
+            typeLabel = '🧠 VLM 深度分析';
+            bgColor = '#1a1a3e';
+            borderColor = '#a855f7';  // 紫色主题
+            break;
+        case 'advanced_analysis':
+            typeLabel = '🧠 高级分析';
+            bgColor = '#1a2e2a';  // 绿色调
+            borderColor = '#00ff88';  // 亮绿色
             break;
         default:
             typeLabel = '📊 分析结果';

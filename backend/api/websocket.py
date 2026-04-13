@@ -107,7 +107,9 @@ async def handle_ip_streaming(websocket, url):
     print(f"\n{'='*60}")
     print(f"🎥 Starting IP Stream: {url}")
     print(f"⚡ GPU 加速: {'✅ CUDA' if detector_instance.device == 'cuda' else '❌ CPU'}")
-    print(f"🧠 场景分析: ✅ Smart Scene Analyzer (轻量级)")
+    print(f"🧠 场景分析: ✅ Advanced Analyzer v2.0 (零依赖)")
+    print(f"   响应时间: <1ms | 描述质量: 智能")
+    print(f"   特点: 无需下载模型，开箱即用")
     print(f"📊 跳帧策略: 每 {detector_instance.detect_interval} 帧检测一次")
     print(f"🔍 分析间隔: {analyzer_instance.analysis_interval} 秒")
     print(f"{'='*60}\n")
@@ -130,11 +132,12 @@ async def handle_ip_streaming(websocket, url):
         # 发送连接成功消息，包含系统信息
         system_info = {
             "type": "ip_stream_connected",
-            "message": f"Successfully connected to IP camera (GPU: {detector_instance.device.upper()}, Analyzer: ✅ Ready)",
+            "message": f"✅ Connected | GPU: {detector_instance.device.upper()} | Analyzer: ✅ Ready",
             "system_status": {
                 "gpu": detector_instance.device,
                 "analyzer_ready": True,
-                "analyzer_model": "Smart Scene Analyzer"
+                "analyzer_model": "Advanced Scene Analyzer v2.0 (Zero Dependencies)",
+                "analyzer_type": "advanced"
             }
         }
         

@@ -206,6 +206,7 @@ function sendLocalFrame() {
     const base64Image = captureCanvas.toDataURL('image/jpeg', 0.6);
     
     window.WSState.ws.send(JSON.stringify({
+        type: "local_frame",
         timestamp: Date.now(),
         image: base64Image
     }));
