@@ -1,0 +1,329 @@
+:root {
+    --bg-color: #050505;
+    --panel-bg: rgba(10, 15, 20, 0.85);
+    --neon-green: #00ff41;
+    --neon-blue: #00f3ff;
+    --text-main: #e0e0e0;
+}
+
+body {
+    margin: 0;
+    padding: 20px;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header h1 {
+    color: var(--neon-blue);
+    text-shadow: 0 0 10px var(--neon-blue);
+    border-bottom: 2px solid var(--neon-blue);
+    padding-bottom: 10px;
+}
+
+.blink {
+    animation: blinker 1s linear infinite;
+    color: red;
+}
+@keyframes blinker { 50% { opacity: 0; } }
+
+.grid-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+}
+
+.panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--neon-green);
+    box-shadow: inset 0 0 10px rgba(0, 255, 65, 0.2);
+    padding: 15px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.panel::before { /* 赛博朋克边角装饰 */
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px;
+    width: 20px; height: 20px;
+    border-top: 2px solid var(--neon-green);
+    border-left: 2px solid var(--neon-green);
+}
+
+.video-panel { grid-column: 1 / 2; grid-row: 1 / 3; }
+.data-panel { grid-column: 2 / 3; grid-row: 1 / 2; }
+.canvas-panel { grid-column: 2 / 3; grid-row: 2 / 3; height: 300px; }
+
+.video-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+}
+
+video, #overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+}
+
+.cyber-btn {
+    background: transparent;
+    color: var(--neon-green);
+    border: 1px solid var(--neon-green);
+    padding: 10px 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-weight: bold;
+    transition: all 0.3s;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.cyber-btn:hover {
+    background: var(--neon-green);
+    color: var(--bg-color);
+    box-shadow: 0 0 15px var(--neon-green);
+}
+
+#log-output {
+    height: 150px;
+    overflow-y: auto;
+    font-size: 0.85em;
+    color: var(--neon-green);
+}
+
+/* 在现有样式基础上添加 */
+.control-panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--neon-blue);
+    box-shadow: inset 0 0 10px rgba(0, 243, 255, 0.2);
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.control-panel::before {
+    content: '';
+    position: absolute;
+    top: -2px; left: -2px;
+    width: 20px; height: 20px;
+    border-top: 2px solid var(--neon-blue);
+    border-left: 2px solid var(--neon-blue);
+}
+
+.control-panel h3 {
+    color: var(--neon-blue);
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: var(--text-main);
+}
+
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--neon-green);
+    color: var(--text-main);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.form-group select:focus,
+.form-group input:focus {
+    outline: none;
+    box-shadow: 0 0 10px var(--neon-green);
+}
+
+/* 在 style.css 中添加 */
+#webcam {
+    z-index: 1; /* 确保视频在底层 */
+    object-fit: cover; /* 确保视频填充容器 */
+}
+
+#overlay {
+    z-index: 2; /* 确保 overlay 在顶层 */
+}
+
+#ip-camera-feed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    object-fit: contain;
+}
+
+/* VLM 分析结果样式 */
+.vlm-status {
+    font-size: 0.9em;
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border-left: 3px solid #ffa500;
+    color: #ffa500;
+    text-align: center;
+    font-weight: bold;
+}
+
+.vlm-output {
+    max-height: 200px;
+    overflow-y: auto;
+    margin-bottom: 15px;
+}
+
+.vlm-analysis-card {
+    padding: 12px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.vlm-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.vlm-type {
+    font-weight: bold;
+    font-size: 0.9em;
+    padding: 2px 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.vlm-anomaly-badge {
+    background: #ff4444;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: bold;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* 分析中状态 - 蓝色呼吸动画 */
+.vlm-analysis-card[style*="#00f3ff"] .vlm-type {
+    animation: breathe 1.5s ease-in-out infinite;
+}
+
+@keyframes breathe {
+    0%, 100% { 
+        opacity: 1;
+        text-shadow: 0 0 5px #00f3ff;
+    }
+    50% { 
+        opacity: 0.6;
+        text-shadow: 0 0 15px #00f3ff;
+    }
+}
+
+.vlm-normal-badge {
+    background: #00ff41;
+    color: black;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.vlm-threats-badge {
+    background: #ffa500;
+    color: black;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.vlm-description {
+    line-height: 1.6;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+    word-break: break-word;
+}
+
+.vlm-timestamp {
+    font-size: 0.75em;
+    color: #888;
+    text-align: right;
+}
+
+/* 性能指标样式 */
+.performance-metrics {
+    margin-top: 10px;
+}
+
+.perf-card {
+    background: rgba(0, 20, 40, 0.7);
+    border: 1px solid var(--neon-blue);
+    padding: 12px;
+    border-radius: 4px;
+}
+
+.perf-card h4 {
+    margin: 0 0 10px 0;
+    color: var(--neon-blue);
+    font-size: 0.9em;
+    text-shadow: 0 0 5px var(--neon-blue);
+}
+
+.perf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 8px;
+}
+
+.perf-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+}
+
+.perf-label {
+    font-size: 0.7em;
+    color: #888;
+    margin-bottom: 3px;
+}
+
+.perf-value {
+    font-size: 1em;
+    font-weight: bold;
+    color: var(--neon-green);
+}
