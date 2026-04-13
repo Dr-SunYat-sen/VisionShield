@@ -1,0 +1,33 @@
+# VisionShield - 智能视觉监控系统
+# Python >= 3.8 (推荐 3.10+)
+# 支持 CPU / CUDA GPU 加速
+
+# ==================== Web框架 ====================
+streamlit>=1.28.0
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+
+# ==================== 深度学习与AI模型 ====================
+torch>=2.0.0
+torchvision>=0.15.0
+transformers>=4.35.0
+ultralytics>=8.0.20
+
+# ==================== 图像处理 ====================
+opencv-python>=4.8.0
+Pillow>=10.0.0
+numpy>=1.24.0
+
+# ==================== 安装说明 ====================
+#
+# 基础安装 (CPU版本):
+#   pip install -r requirements.txt
+#
+# GPU加速安装 (推荐):
+#   # 1. 先安装 CUDA 版本的 PyTorch
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#   # 2. 再安装其他依赖
+#   pip install -r requirements.txt
+#
+# 验证安装:
+#   python -c "import torch; print(f'CUDA可用: {torch.cuda.is_available()}')"
